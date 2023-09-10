@@ -19,7 +19,7 @@ class PostForm extends Model
         $rules = [
             [['author', 'content'], 'required'],
             ['author', 'string', 'min' => 2, 'max' => 15],
-            ['content', 'string', 'min' => 5, 'max' => 1000],
+            ['content', 'string', 'min' => 30, 'max' => 1000],
         ];
 
         if (\Yii::$app->params['captcha_active']) {
