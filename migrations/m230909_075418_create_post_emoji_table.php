@@ -12,13 +12,19 @@ class m230909_075418_create_post_emoji_table extends Migration
      */
     public function safeUp()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            // MySQL-specific code
+            $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci ENGINE=InnoDB';
+        }
+
         $this->createTable('{{%post_emoji}}', [
             'id' => $this->primaryKey(),
             'post_id' => $this->bigInteger()->notNull(),
             'emoji_id' => $this->integer()->notNull(),
             'user_ip' => $this->string(100)->notNull(),
             'created_at' => $this->integer()->null(),
-        ]);
+        ], $tableOptions);
 
         $this->createIndex(
             'idx-post-emoji-user_ip-unique',

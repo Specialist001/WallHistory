@@ -33,8 +33,8 @@ $this->registerCss($cs);
     <div class="col-md-6">
         <h1>История</h1>
         <div class="scrollable-content">
-            <?php if ($posts): ?>
-                <div id="posts">
+            <div id="posts">
+                <?php if ($posts): ?>
                     <?php foreach ($posts as $post): ?>
                         <div class="card card-default mb-2">
                             <div class="card-body">
@@ -50,16 +50,19 @@ $this->registerCss($cs);
                                     <?php foreach ($emojis as $emoji) { ?>
                                         <?php if (!empty($post['reactions'])) {
                                             if (array_key_exists($emoji['id'], $post['reactions'])) { ?>
-                                                <span class="post-action me-1 d-inline-block mb-0" data-emoji_id="<?php echo $emoji['id'] ?>">
+                                                <span class="post-action me-1 d-inline-block mb-0"
+                                                      data-emoji_id="<?php echo $emoji['id'] ?>">
                                                     <?php echo $post['reactions'][$emoji['id']]['reaction_count'] . "x" . $post['reactions'][$emoji['id']]['emoji_code'] ?>
                                                 </span>
                                             <?php } else { ?>
-                                                <span class="post-action me-1 d-inline-block mb-0" data-emoji_id="<?php echo $emoji['id'] ?>">
+                                                <span class="post-action me-1 d-inline-block mb-0"
+                                                      data-emoji_id="<?php echo $emoji['id'] ?>">
                                                     <?php echo $emoji['code'] ?>
                                                 </span>
                                             <?php } ?>
                                         <?php } else { ?>
-                                            <span class="post-action me-1 d-inline-block mb-0" data-emoji_id="<?php echo $emoji['id'] ?>">
+                                            <span class="post-action me-1 d-inline-block mb-0"
+                                                  data-emoji_id="<?php echo $emoji['id'] ?>">
                                                 <?php echo $emoji['code'] ?>
                                             </span>
                                         <?php } ?>
@@ -69,10 +72,11 @@ $this->registerCss($cs);
                         </div>
 
                     <?php endforeach; ?>
-                </div>
-            <?php else: ?>
-                <p>Постов пока нет.</p>
-            <?php endif; ?>
+
+                <?php else: ?>
+                    <p id="post-none">Постов пока нет.</p>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 
@@ -107,6 +111,6 @@ $this->registerCss($cs);
 </div>
 <!-- JS code -->
 <?php
-$this->registerJsFile('/js/post.js', ['depends' => [\yii\web\JqueryAsset::class]]);
+$this->registerJsFile('/js/post.js', ['depends' => [\yii\web\YiiAsset::class]]);
 ?>
 

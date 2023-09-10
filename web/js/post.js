@@ -10,6 +10,10 @@ $(function() {
             success: function(response){
                 if(response.success === true){
                     $('#posts').prepend(response.part);
+                    if($('#post-none').length){
+                        $('#post-none').remove();
+                    }
+
                     form.trigger('reset');
                 }else{
                     alert(response.message);
