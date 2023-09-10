@@ -1,6 +1,10 @@
 <?php
 
-$params = require __DIR__ . '/params.php';
+$params = array_merge(
+    require(__DIR__ . '/params.php'),
+    require(__DIR__ . '/params-local.php')
+);
+
 $db = require __DIR__ . '/db-local.php';
 
 $config = [

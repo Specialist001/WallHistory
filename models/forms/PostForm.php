@@ -16,12 +16,16 @@ class PostForm extends Model
 
     public function rules()
     {
-        return [
+        $rules = [
             [['author', 'content'], 'required'],
-            ['captcha', 'captcha'],
             ['author', 'string', 'min' => 2, 'max' => 15],
             ['content', 'string', 'min' => 5, 'max' => 1000],
         ];
+
+        if (\Yii::$app->params['captcha_active']) {
+            $rules[] = ['captcha', 'captcha'];
+        }
+        return $rules;
     }
 
     // labels
@@ -50,12 +54,14 @@ class PostForm extends Model
 
         $post->ip = SiteHelper::getUserIP();
 
+        $limit_time = \Yii::$app->params['post_create_limit_time'] ?? self::LIMIT_TIME;
+
         // if this IP has already posted in last 3 minutes, then return access time to post again
         $lastPost = Post::find()->where(['ip' => $post->ip])->orderBy(['created_at' => SORT_DESC])->one();
         if ($lastPost) {
             $time = time() - $lastPost->created_at;
-            if ($time < self::LIMIT_TIME) {
-                $seconds = self::LIMIT_TIME - $time;
+            if ($time < $limit_time) {
+                $seconds = $limit_time - $time;
                 $interval = \Carbon\CarbonInterval::seconds($seconds);
 
                 return $interval->cascade()->forHumans(['join' => true]);
