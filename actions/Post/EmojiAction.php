@@ -24,7 +24,7 @@ class EmojiAction extends \yii\base\Action
             $emoji = Emoji::findOne($emoji_id);
 
             if (!$post) {
-                return ['success' => false, 'message' => 'Пости не существует.'];
+                return ['success' => false, 'message' => 'Пост не существует.'];
             }
 
             if (!$emoji) {
